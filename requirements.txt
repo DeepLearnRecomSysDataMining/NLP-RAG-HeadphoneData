@@ -1,0 +1,9 @@
+pyvi
+sentence-transformers
+langchain
+langchain-community
+langchain-huggingface
+faiss-cpu
+rank-bm25
+matplotlib
+seaborn
