@@ -5,17 +5,26 @@ from sentence_transformers import SentenceTransformer
 from langchain_community.vectorstores import FAISS
 from langchain_huggingface import HuggingFaceEmbeddings
 
-from config import INDEX_FOLDER, DOCSTORE_PATH, EMBED_MODEL_NAME, RERANK_MODEL_NAME, DEVICE
-from prepare_data import prepare_data
-from sharedutil import check_file_exists, check_metadata_fields
+from config.config import INDEX_FOLDER, DOCSTORE_PATH, EMBED_MODEL_NAME, RERANK_MODEL_NAME, DEVICE
+from build_index.prepare_data import prepare_data
+from utils.sharedutil import check_file_exists, check_metadata_fields
+
+from rank_bm25 import BM25Okapi
+from sentence_transformers import CrossEncoder
 
 
 def build_index(documents):
+    """
+    SỬA ĐIỂM 7: Tách riêng bước build index.
+    SỬA ĐIỂM 9: Log chi tiết từng bước.
+    """
     if documents is None or len(documents) == 0:
         print("[ERROR] Không có documents để build index!")
         return None
+
     print(f"[RUNNING] Bắt đầu build index với {len(documents)} documents...")
 
+    # SỬA ĐIỂM 1: Dùng DEVICE từ config
     lc_embedder = HuggingFaceEmbeddings(
         model_name=EMBED_MODEL_NAME,
         model_kwargs={'device': DEVICE}
@@ -24,9 +33,9 @@ def build_index(documents):
     texts     = [doc.page_content for doc in documents]
     metadatas = [doc.metadata for doc in documents]
 
-    print(f"   Đang encode {len(texts)} texts")
+    print(f"   Đang encode {len(texts)} texts bằng {DEVICE.upper()}...")
     fast_embedder = SentenceTransformer(EMBED_MODEL_NAME, device=DEVICE)
-    batch = 32
+    batch = 256 if DEVICE == 'cuda' else 32
     embeddings_matrix = fast_embedder.encode(texts, batch_size=batch, show_progress_bar=True)
 
     print("\n[RUNNING] Đóng gói vào FAISS...")
@@ -41,15 +50,15 @@ def build_index(documents):
     vector_store.save_local(INDEX_FOLDER)
     with open(DOCSTORE_PATH, "wb") as f:
         pickle.dump(documents, f)
-    print(f"[INFO] Build index hoàn thành! ({len(documents)} vectors)")
 
+    print(f"[INFO] Build index hoàn thành! ({len(documents)} vectors)")
     return vector_store
 
-from rank_bm25 import BM25Okapi
-from sentence_transformers import CrossEncoder
-
 def load_index():
-    """ Tách riêng bước load. Guard kiểm tra file tồn tại. """
+    """
+    SỬA ĐIỂM 7: Tách riêng bước load.
+    SỬA ĐIỂM 9: Guard kiểm tra file tồn tại.
+    """
     if not check_file_exists(INDEX_FOLDER, "INDEX_FOLDER"):
         return None, None, None, None
     if not check_file_exists(DOCSTORE_PATH, "DOCSTORE"):
@@ -58,7 +67,7 @@ def load_index():
     print("\n⏳ Đang tải Embedding model...")
     embeddings = HuggingFaceEmbeddings(
         model_name=EMBED_MODEL_NAME,
-        model_kwargs={'device': DEVICE}
+        model_kwargs={'device': DEVICE}  # SỬA ĐIỂM 1
     )
     vector_store = FAISS.load_local(INDEX_FOLDER, embeddings, allow_dangerous_deserialization=True)
 
@@ -73,14 +82,14 @@ def load_index():
     else:
         print(f"[INFO] Tất cả {len(all_docs)} documents có đủ metadata")
 
-    # BM25 tokenize chuẩn PyVi (page_content đã được tokenize khi build)
+    # SỬA ĐIỂM 8: BM25 tokenize chuẩn PyVi (page_content đã được tokenize khi build)
     print("[RUNNING] Đang khởi tạo BM25 (dùng page_content đã tokenize PyVi)...")
     tokenized_corpus = [doc.page_content.split() for doc in all_docs]
     bm25 = BM25Okapi(tokenized_corpus)
     print(f"   BM25 vocab size: {len(bm25.idf)} terms")
 
     print("[RUNNING] Đang tải Reranker...")
-    reranker = CrossEncoder(RERANK_MODEL_NAME, device=DEVICE)
+    reranker = CrossEncoder(RERANK_MODEL_NAME, device=DEVICE)  # SỬA ĐIỂM 1
 
     print(f"\n[INFO] Hệ thống Retrieval sẵn sàng! ({len(all_docs)} docs trong index)")
     return vector_store, bm25, reranker, all_docs

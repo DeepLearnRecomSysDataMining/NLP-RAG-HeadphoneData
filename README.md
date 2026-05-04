@@ -2,7 +2,7 @@
 
 Dự án này triển khai hệ thống Tìm kiếm thông tin (Retrieval) kết hợp với Reranking (Hybrid Search) dành cho dữ liệu tai nghe và thiết bị âm thanh. Hệ thống hỗ trợ tìm kiếm ngữ nghĩa (Semantic Search), tìm kiếm từ khóa (BM25) và đánh giá hiệu năng tự động.
 
-## 🚀 Tính năng chính
+## Tính năng chính
 
 - **Hybrid Retrieval**: Kết hợp Dense Search (FAISS + Bi-Encoder) và Sparse Search (BM25).
 - **Reranking**: Sử dụng Cross-Encoder để xếp hạng lại kết quả, tăng độ chính xác.
@@ -10,7 +10,7 @@ Dự án này triển khai hệ thống Tìm kiếm thông tin (Retrieval) kết
 - **Tự động Đánh giá**: Tính toán các chỉ số Precision@K, Hit Rate@K, MRR, nDCG để so sánh các chế độ tìm kiếm.
 - **Hỗ trợ CPU/GPU**: Tự động nhận diện thiết bị (hỗ trợ tốt khi chuyển từ Colab sang máy cá nhân).
 
-## 🛠 Cài đặt
+## Cài đặt
 
 ### 1. Chuẩn bị môi trường
 Yêu cầu Python 3.9 trở lên. Nên sử dụng môi trường ảo (venv):
@@ -23,23 +23,22 @@ python -m venv .venv
 source .venv/bin/activate
 ```
 
-### 2. Cài đặt thư viện
+### Cài đặt thư viện
 ```bash
 pip install -r requirements.txt
 ```
 
-*Lưu ý: Nếu bạn dùng GPU, có thể cài đặt `faiss-gpu` thay cho `faiss-cpu`.*
-
-## 📂 Cấu trúc dữ liệu cần thiết
+## Cấu trúc dữ liệu cần thiết
 
 Để chạy ngay mà không cần build index, bạn cần đặt các file sau vào thư mục gốc của dự án:
 - `faiss_index_v2/`: Thư mục chứa dữ liệu vector FAISS.
 - `docstore_v2.pkl`: File lưu trữ nội dung văn bản gốc.
-- `full_xuanvu_database.csv`: (Tùy chọn) Dữ liệu thô để build lại index nếu cần.
+- `full_xuanvu_database.csv`: Dữ liệu thô để build lại index nếu cần.
 
 các file này đã có trên drive tại thư mục drive : `https://drive.google.com/drive/folders/1GSWRWE7ydo1tcmuvmlTuG-aOEvQQMTz8?usp=sharing` , chỉ cần download về và đặt vào thư mục gốc của dự án. và chạy `python main.py` để test.
 
-## 🏃 Hướng dẫn chạy
+## Hướng dẫn chạy
+Có thể chạy .py  bằng file [main.py](main.py) hoặc chạy [notebook]() 
 
 ### Chạy hệ thống (Đánh giá + Chat)
 Đây là file chính để khởi động toàn bộ quy trình:
@@ -52,25 +51,9 @@ python main.py
 3. In bảng kết quả so sánh (MRR Gain).
 4. Hỏi người dùng có muốn bắt đầu phiên hỏi đáp tương tác (Chat) không.
 
-### Chạy riêng Evaluation
-Nếu bạn chỉ muốn kiểm tra hiệu năng hệ thống:
-```bash
-python eval.py
-```
-
-## 📝 Giải thích các file chính
-
-- `config.py`: Chứa mọi cấu hình về Model, Path, Top-K và thiết bị (CPU/GPU).
-- `index.py`: Quản lý việc xây dựng (build) và tải (load) Index.
-- `rag_answer.py`: Chứa logic tìm kiếm Hybrid, Reranking và Metadata Bonus.
-- `eval.py`: Chứa bộ câu hỏi kiểm thử và các hàm tính toán metric đánh giá.
-- `prepare_data.py`: Tiền xử lý dữ liệu từ file CSV sang định dạng Document cho FAISS.
-- `sharedutil.py`: Các hàm tiện ích bổ trợ (clean text, check file).
-
-## 📊 Kết quả đánh giá
+## Kết quả đánh giá
 Sau khi chạy, kết quả chi tiết sẽ được lưu vào file `eval_results.csv`. Hệ thống sẽ so sánh giữa:
 - **Dense**: Chỉ tìm kiếm bằng Vector.
 - **Hybrid+Rerank**: Kết hợp Vector + BM25 + Cross-Encoder.
 
 ---
-*Dự án được tối ưu hóa để chạy mượt mà trên cả CPU máy cá nhân.*

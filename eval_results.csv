@@ -1,25 +1,25 @@
-Query,Mode,Precision@5,HitRate@5,MRR,nDCG@5
-Tìm cho tôi dây cáp PWaudio No.5 Đồng OCC Litz,Dense,0.2,1.0,1.0,1.0
-Tìm cho tôi dây cáp PWaudio No.5 Đồng OCC Litz,Hybrid+Rerank,0.2,1.0,1.0,1.0
-Tìm dây cáp tai nghe PWAudio giá dưới 5 triệu,Dense,0.8,1.0,1.0,2.518
-Tìm dây cáp tai nghe PWAudio giá dưới 5 triệu,Hybrid+Rerank,1.0,1.0,1.0,2.948
-Các dòng cáp Century Series The 1960s của PWAudio có tốt không?,Dense,0.4,1.0,1.0,0.85
-Các dòng cáp Century Series The 1960s của PWAudio có tốt không?,Hybrid+Rerank,0.4,1.0,1.0,0.92
-Dây nâng cấp âm thanh Ignit mạ bạc cho in-ear,Dense,0.0,0.0,0.0,0.0
-Dây nâng cấp âm thanh Ignit mạ bạc cho in-ear,Hybrid+Rerank,0.0,0.0,0.0,0.0
-Cho tôi thông tin về cáp PWAudio Monile MKII bản có Shielding (chống nhiễu),Dense,0.2,1.0,0.5,0.631
-Cho tôi thông tin về cáp PWAudio Monile MKII bản có Shielding (chống nhiễu),Hybrid+Rerank,0.2,1.0,1.0,1.0
-Tôi muốn nâng cấp dây dẫn bằng đồng nguyên chất cho tai nghe,Dense,0.0,0.0,0.0,0.0
-Tôi muốn nâng cấp dây dẫn bằng đồng nguyên chất cho tai nghe,Hybrid+Rerank,0.0,0.0,0.0,0.0
-Tìm cho tôi tai nghe ThieAudio Oracle MKIII,Dense,0.2,1.0,1.0,1.0
-Tìm cho tôi tai nghe ThieAudio Oracle MKIII,Hybrid+Rerank,0.2,1.0,1.0,1.0
-Có mẫu loa đeo cổ Monster nào giá dưới 2 triệu không?,Dense,1.0,1.0,1.0,2.948
-Có mẫu loa đeo cổ Monster nào giá dưới 2 triệu không?,Hybrid+Rerank,1.0,1.0,1.0,2.948
-Tôi cần tìm dây cáp ddHiFi cổng 4.4mm có cấu tạo lõi bạc và OCC,Dense,0.0,0.0,0.0,0.0
-Tôi cần tìm dây cáp ddHiFi cổng 4.4mm có cấu tạo lõi bạc và OCC,Hybrid+Rerank,0.2,1.0,1.0,1.0
-Bên shop có bán mút tai nghe thay thế cho con chụp tai Sony 10RBT không?,Dense,0.0,0.0,0.0,0.0
-Bên shop có bán mút tai nghe thay thế cho con chụp tai Sony 10RBT không?,Hybrid+Rerank,0.2,1.0,1.0,1.0
-Cho tôi xin mẫu tai nghe in-ear cấu hình tribrid có tích hợp công nghệ IMPACT,Dense,0.2,1.0,0.2,0.387
-Cho tôi xin mẫu tai nghe in-ear cấu hình tribrid có tích hợp công nghệ IMPACT,Hybrid+Rerank,0.2,1.0,1.0,1.0
-FiiO JD7,Dense,0.2,1.0,0.25,0.431
-FiiO JD7,Hybrid+Rerank,0.2,1.0,1.0,1.0
+Query,Mode,Precision@5,HitRate@5,MRR,nDCG@5,PriceConstraintRate,BrandMatchRate,Top1
+Tìm cho tôi dây cáp PWaudio No.5 Đồng OCC Litz,Dense,0.2,1.0,1.0,1.0,,0.4,PWaudio No.5 Đồng OCC Litz
+Tìm cho tôi dây cáp PWaudio No.5 Đồng OCC Litz,Hybrid+Rerank,0.2,1.0,0.5,0.631,,1.0,PW Audio Anniversary series No.5 8wired
+Tìm dây cáp tai nghe PWAudio giá dưới 5 triệu,Dense,0.6,1.0,1.0,0.723,0.6,0.4,PW Audio Helix series Monile
+Tìm dây cáp tai nghe PWAudio giá dưới 5 triệu,Hybrid+Rerank,1.0,1.0,1.0,1.0,1.0,1.0,PWAudio Entry Level The Flash Copper
+Các dòng cáp Century Series The 1960s của PWAudio có tốt không?,Dense,0.4,1.0,1.0,0.85,,1.0,PWAudio Century Series The 1960s
+Các dòng cáp Century Series The 1960s của PWAudio có tốt không?,Hybrid+Rerank,0.4,1.0,1.0,0.92,,1.0,PWAudio Century Series The 1960s
+Dây nâng cấp âm thanh Ignit mạ bạc cho in-ear,Dense,0.0,0.0,0.0,0.0,,,iKKO CTU01/Arc SPCOCC Material Cable (2 Pin - 2.5mm)
+Dây nâng cấp âm thanh Ignit mạ bạc cho in-ear,Hybrid+Rerank,0.0,0.0,0.0,0.0,,,Tai nghe KZ X HBB DQ6S có Mic
+Cho tôi thông tin về cáp PWAudio Monile MKII bản có Shielding chống nhiễu,Dense,0.2,1.0,0.5,0.631,,0.4,PWAudio Monile MKII ft.60s
+Cho tôi thông tin về cáp PWAudio Monile MKII bản có Shielding chống nhiễu,Hybrid+Rerank,0.2,1.0,1.0,1.0,,1.0,PWAudio Monile MKII Shielding
+Tôi muốn nâng cấp dây dẫn bằng đồng nguyên chất cho tai nghe,Dense,0.0,0.0,0.0,0.0,,,Tai nghe FiiO JF11 - Có Mic
+Tôi muốn nâng cấp dây dẫn bằng đồng nguyên chất cho tai nghe,Hybrid+Rerank,0.0,0.0,0.0,0.0,,,Tai nghe FiiO JF11 - Có Mic
+Tìm cho tôi tai nghe ThieAudio Oracle MKIII,Dense,0.2,1.0,1.0,1.0,,0.8,Tai nghe ThieAudio Oracle MKIII
+Tìm cho tôi tai nghe ThieAudio Oracle MKIII,Hybrid+Rerank,0.2,1.0,1.0,1.0,,1.0,Tai nghe ThieAudio Oracle MKIII
+Có mẫu loa đeo cổ Monster nào giá dưới 2 triệu không?,Dense,1.0,1.0,1.0,1.0,0.6,1.0,Loa đeo cổ Monster Boomerang
+Có mẫu loa đeo cổ Monster nào giá dưới 2 triệu không?,Hybrid+Rerank,1.0,1.0,1.0,1.0,1.0,1.0,Loa đeo cổ Monster Boomerang
+Tôi cần tìm dây cáp ddHiFi cổng 4.4mm có cấu tạo lõi bạc và OCC,Dense,0.0,0.0,0.0,0.0,,,Tai nghe ThieAudio Prestige LTD
+Tôi cần tìm dây cáp ddHiFi cổng 4.4mm có cấu tạo lõi bạc và OCC,Hybrid+Rerank,0.2,1.0,1.0,1.0,,,ddHiFi BC44Pro 4.4mm Balanced Cable
+Bên shop có bán mút tai nghe thay thế cho con chụp tai Sony 10RBT không?,Dense,0.0,0.0,0.0,0.0,,0.6,Đệm Pad tai nghe Sennheiser Momentum Around Ear 2.0
+Bên shop có bán mút tai nghe thay thế cho con chụp tai Sony 10RBT không?,Hybrid+Rerank,0.2,1.0,1.0,1.0,,1.0,Đệm Pad tai nghe Sony MDR -10RBT
+Cho tôi xin mẫu tai nghe in-ear cấu hình tribrid có tích hợp công nghệ IMPACT,Dense,0.2,1.0,0.2,0.387,,,Oriolus Traillii Ultra IEM System
+Cho tôi xin mẫu tai nghe in-ear cấu hình tribrid có tích hợp công nghệ IMPACT,Hybrid+Rerank,0.2,1.0,1.0,1.0,,,Tai nghe ThieAudio Oracle MKIII
+FiiO JD7,Dense,0.2,1.0,0.25,0.431,,1.0,FiiO R7 Desktop Media Player
+FiiO JD7,Hybrid+Rerank,0.2,1.0,1.0,1.0,,1.0,Tai nghe FiiO/Jade Audio JD7

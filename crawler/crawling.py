@@ -5,6 +5,7 @@ import time
 import random
 import concurrent.futures
 import re
+from config.config import RAW_DATA_PATH
 
 # ==========================================
 # CẤU HÌNH HỆ THỐNG
@@ -166,7 +167,7 @@ def run_full_scraper():
                 final_data.append(data)
 
     # Lưu ra CSV trên Google Drive
-    local_save_path = "full_xuanvu_database.csv"
+    local_save_path = RAW_DATA_PATH
     df = pd.DataFrame(final_data)
     df.to_csv(local_save_path, index=False, encoding='utf-8-sig')
 

@@ -2,8 +2,8 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import pandas as pd
 
-from config import RAW_DATA_PATH
-from sharedutil import check_file_exists, extract_brand
+from config.config import RAW_DATA_PATH
+from utils.sharedutil import check_file_exists, extract_brand
 
 
 def run_eda():

@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Audio Assistant - RAG System</title>
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --text-color: #1e293b;
+            --border-color: #e2e8f0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 800px;
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+        }
+
+        h1 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: var(--primary-color);
+            text-align: center;
+        }
+
+        /* Ô cấu hình Server */
+        .config-box {
+            margin-bottom: 20px;
+            background: #f1f5f9;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px dashed #94a3b8;
+        }
+
+        .config-box label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: #475569;
+        }
+
+        .config-box input {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 10px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-family: monospace;
+            font-size: 0.95rem;
+            outline: none;
+        }
+
+        .config-box input:focus {
+            border-color: var(--primary-color);
+        }
+
+        .search-box {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 25px;
+        }
+
+        .search-box input {
+            flex: 1;
+            padding: 12px 16px;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .search-box input:focus {
+            border-color: var(--primary-color);
+        }
+
+        button {
+            padding: 12px 24px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+
+        button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        #resultArea {
+            display: none;
+            border-top: 1px solid var(--border-color);
+            padding-top: 20px;
+            animation: fadeIn 0.3s ease-in;
+        }
+
+        .answer-section {
+            line-height: 1.6;
+            white-space: pre-wrap;
+            margin-bottom: 20px;
+        }
+
+        .source-list {
+            background: #f1f5f9;
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        .source-list h3 {
+            margin-top: 0;
+            font-size: 0.9rem;
+            color: #64748b;
+            text-transform: uppercase;
+        }
+
+        .source-list a {
+            display: block;
+            color: var(--primary-color);
+            text-decoration: none;
+            font-size: 0.85rem;
+            margin-bottom: 5px;
+            word-break: break-all;
+        }
+
+        .source-list a:hover {
+            text-decoration: underline;
+        }
+
+        .loader {
+            display: none;
+            text-align: center;
+            margin: 20px 0;
+            font-style: italic;
+            color: #64748b;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>🎧 AI Audio Assistant</h1>
+
+    <div class="config-box">
+        <label for="apiUrlInput">🔗 Server API URL (LocalTunnel):</label>
+        <input type="text" id="apiUrlInput" placeholder="Ví dụ: https://stupid-turkey-12.loca.lt">
+    </div>
+
+    <div class="search-box">
+        <input type="text" id="queryInput" placeholder="Hỏi về tai nghe, máy nghe nhạc, cáp âm thanh...">
+        <button id="sendBtn">Tìm kiếm</button>
+    </div>
+
+    <div id="loader" class="loader">Đang truy vấn dữ liệu và phân tích...</div>
+
+    <div id="resultArea">
+        <div id="answer" class="answer-section"></div>
+        <div class="source-list">
+            <h3>Nguồn tham khảo:</h3>
+            <div id="sources"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const apiUrlInput = document.getElementById('apiUrlInput');
+    const queryInput = document.getElementById('queryInput');
+    const sendBtn = document.getElementById('sendBtn');
+    const loader = document.getElementById('loader');
+    const resultArea = document.getElementById('resultArea');
+    const answerDiv = document.getElementById('answer');
+    const sourcesDiv = document.getElementById('sources');
+
+    async function handleSearch() {
+        let baseUrl = apiUrlInput.value.trim();
+        const query = queryInput.value.trim();
+
+        if (!baseUrl) {
+            alert('Vui lòng dán link LocalTunnel vào ô Server API URL trước!');
+            apiUrlInput.focus();
+            return;
+        }
+
+        if (!query) return;
+
+        // Chuẩn hóa URL: Tự động nối thêm /api/ask nếu người dùng chưa nhập
+        let finalApiUrl = baseUrl;
+        if (!finalApiUrl.includes('/api/ask')) {
+            finalApiUrl = finalApiUrl.replace(/\/$/, '') + '/api/ask';
+        }
+
+        // Reset UI
+        sendBtn.disabled = true;
+        loader.style.display = 'block';
+        resultArea.style.display = 'none';
+        sourcesDiv.innerHTML = '';
+
+        try {
+            const response = await fetch(finalApiUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Bypass-Tunnel-Reminder': 'true' // Bypass màn hình cảnh báo của LocalTunnel
+                },
+                body: JSON.stringify({ query: query })
+            });
+
+            if (!response.ok) throw new Error(`Lỗi Server: ${response.status}`);
+
+            const data = await response.json();
+
+            // Hiển thị câu trả lời
+            answerDiv.innerText = data.answer;
+
+            // Hiển thị nguồn
+            if (data.sources && data.sources.length > 0) {
+                data.sources.forEach(url => {
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.target = '_blank';
+                    a.innerText = url;
+                    sourcesDiv.appendChild(a);
+                });
+            }
+
+            resultArea.style.display = 'block';
+        } catch (error) {
+            alert('Có lỗi xảy ra: ' + error.message + '\n\nHãy kiểm tra xem LocalTunnel đã chạy chưa và link URL có đúng không nhé!');
+        } finally {
+            sendBtn.disabled = false;
+            loader.style.display = 'none';
+        }
+    }
+
+    sendBtn.addEventListener('click', handleSearch);
+    queryInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') handleSearch();
+    });
+</script>
+
+</body>
+</html>
