@@ -78,14 +78,7 @@ def prepare_data():
         if len(raw_review) > CHUNK_IF_LONGER_THAN:
             n_chunked += 1
             raw_chunks = text_splitter.split_text(structured_raw)
-            for chunk in raw_chunks:
-                # SỬA ĐIỂM 2: Dùng clean_vietnamese_text chung
-                clean_chunk = clean_vietnamese_text(chunk)
-                if clean_chunk.strip():
-                    documents.append(Document(
-                        page_content=clean_chunk,
-                        metadata={**metadata_base, "original_content": chunk}
-                    ))
+
             for chunk_id, chunk in enumerate(text_splitter.split_text(structured_raw)):
                 clean_chunk = clean_vietnamese_text(chunk)
                 if clean_chunk.strip():

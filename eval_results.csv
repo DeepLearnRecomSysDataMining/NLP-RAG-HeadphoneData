@@ -6,7 +6,7 @@ Tìm dây cáp tai nghe PWAudio giá dưới 5 triệu,Hybrid+Rerank,1.0,1.0,1.0
 Các dòng cáp Century Series The 1960s của PWAudio có tốt không?,Dense,0.4,1.0,1.0,0.85,,1.0,PWAudio Century Series The 1960s
 Các dòng cáp Century Series The 1960s của PWAudio có tốt không?,Hybrid+Rerank,0.4,1.0,1.0,0.92,,1.0,PWAudio Century Series The 1960s
 Dây nâng cấp âm thanh Ignit mạ bạc cho in-ear,Dense,0.0,0.0,0.0,0.0,,,iKKO CTU01/Arc SPCOCC Material Cable (2 Pin - 2.5mm)
-Dây nâng cấp âm thanh Ignit mạ bạc cho in-ear,Hybrid+Rerank,0.0,0.0,0.0,0.0,,,Tai nghe KZ X HBB DQ6S có Mic
+Dây nâng cấp âm thanh Ignit mạ bạc cho in-ear,Hybrid+Rerank,0.0,0.0,0.0,0.0,,,TRN A2 A2-S Cable
 Cho tôi thông tin về cáp PWAudio Monile MKII bản có Shielding chống nhiễu,Dense,0.2,1.0,0.5,0.631,,0.4,PWAudio Monile MKII ft.60s
 Cho tôi thông tin về cáp PWAudio Monile MKII bản có Shielding chống nhiễu,Hybrid+Rerank,0.2,1.0,1.0,1.0,,1.0,PWAudio Monile MKII Shielding
 Tôi muốn nâng cấp dây dẫn bằng đồng nguyên chất cho tai nghe,Dense,0.0,0.0,0.0,0.0,,,Tai nghe FiiO JF11 - Có Mic

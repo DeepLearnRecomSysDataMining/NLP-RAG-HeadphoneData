@@ -35,10 +35,12 @@ pip install -r requirements.txt
 - `docstore_v2.pkl`: File lưu trữ nội dung văn bản gốc.
 - `full_xuanvu_database.csv`: Dữ liệu thô để build lại index nếu cần.
 
-các file này đã có trên drive tại thư mục drive : `https://drive.google.com/drive/folders/1GSWRWE7ydo1tcmuvmlTuG-aOEvQQMTz8?usp=sharing` , chỉ cần download về và đặt vào thư mục gốc của dự án. và chạy `python main.py` để test.
+Các file này đã có trên drive tại thư mục drive : `https://drive.google.com/drive/folders/1GSWRWE7ydo1tcmuvmlTuG-aOEvQQMTz8?usp=sharing` , chỉ cần download về và đặt vào thư mục gốc của dự án. và chạy `python main.py` để test.
+
+- file [RAG_NLP_Improved.ipynb](RAG_NLP_Improved.ipynb) là file chạy trên Colab để chạy với tập data này.
 
 ## Hướng dẫn chạy
-Có thể chạy .py  bằng file [main.py](main.py) hoặc chạy [notebook]() 
+Có thể chạy .py  bằng file [main.py](main.py) hoặc chạy [RAG_NLP_Improved](RAG_NLP_Improved.ipynb) 
 
 ### Chạy hệ thống (Đánh giá + Chat)
 Đây là file chính để khởi động toàn bộ quy trình:

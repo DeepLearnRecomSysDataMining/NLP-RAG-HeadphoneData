@@ -112,10 +112,10 @@ if __name__ == "__main__":
     else:
         print("[INFO] Index đã tồn tại — load trực tiếp...")
         vector_store, bm25, reranker, all_docs = load_index()
-    #
-    # # 1. Chạy Evaluation tự động
+
+    # 1. Chạy Evaluation tự động
     # run_evaluation(vector_store, bm25, reranker, all_docs)
-    #
+
     # run_demo(vector_store, bm25, reranker, all_docs, top_k=5, verbose=True)
     #
     # # 2. Hỏi người dùng có muốn chat không
