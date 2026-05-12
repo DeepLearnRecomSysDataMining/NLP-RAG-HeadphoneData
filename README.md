@@ -1,3 +1,13 @@
+# Báo cáo Bài tập lớn - Xử lý Ngôn ngữ tự nhiên
+## Nhóm 14 - lớp N02 - 10h sáng
+## Các thành viên tham gia:
+
+| Họ và tên      | Mã sinh viên |
+|----------------|--------------|
+| Nguyễn Văn Qúy | B22DCKH100   |
+| Đào Thịnh Phú  | B22DCKH086   |
+| Đào Văn Công |  B22DCKH010  |
+
 # NLP RAG Project - Headphone Data Search & Evaluation
 
 Dự án này triển khai hệ thống Tìm kiếm thông tin (Retrieval) kết hợp với Reranking (Hybrid Search) dành cho dữ liệu tai nghe và thiết bị âm thanh. Hệ thống hỗ trợ tìm kiếm ngữ nghĩa (Semantic Search), tìm kiếm từ khóa (BM25) và đánh giá hiệu năng tự động.
